@@ -1,0 +1,72 @@
+.contact-section {
+  background-color: #0b0b0b;
+  padding: 4rem 1rem;
+  color: white;
+  text-align: center;
+}
+
+.contact-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-section h2 {
+  font-size: 2rem;
+  color: #facc15;
+  margin-bottom: 1rem;
+}
+
+.contact-section p {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 1.5rem;
+}
+
+.contact-email {
+  display: inline-block;
+  font-size: 1rem;
+  color: #facc15;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+.contact-email:hover {
+  color: #fff;
+}
+
+.contact-email svg {
+  margin-right: 0.5rem;
+}
+
+.contact-socials {
+  margin-bottom: 2rem;
+}
+
+.contact-socials a {
+  margin: 0 0.75rem;
+  font-size: 1.5rem;
+  color: #facc15;
+  transition: color 0.3s ease;
+}
+
+.contact-socials a:hover {
+  color: #ffffff;
+}
+
+.rights-tag {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .contact-socials a {
+    font-size: 1.25rem;
+    margin: 0 0.5rem;
+  }
+
+  .rights-tag {
+    font-size: 0.75rem;
+  }
+}
