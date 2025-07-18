@@ -16,11 +16,13 @@
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0 15px rgba(0, 188, 212, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: 360px;
   width: 100%;
   max-width: 250px;
   margin: 0 auto;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .short-card:hover {
@@ -28,13 +30,30 @@
   box-shadow: 0 0 25px rgba(0, 188, 212, 0.4);
 }
 
+.short-card:focus {
+  outline: 2px solid #00bcd4;
+  outline-offset: 4px;
+}
+
 .short-card iframe {
   width: 100%;
   height: 100%;
   border: none;
-  display: block;
   object-fit: cover;
   aspect-ratio: 9 / 16;
+  pointer-events: none;  /* 🔸 Prevent in-card play */
+}
+
+.play-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: white;
+  z-index: 2;
+  pointer-events: none;  /* 🔸 So whole card is clickable */
+  opacity: 0.8;
 }
 
 .swiper {
@@ -53,9 +72,50 @@
   opacity: 1;
   transform: scale(1.2);
 }
+
 .portrait-carousel-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
   box-sizing: border-box;
+}
+
+/* Expanded video styling */
+.expanded-video-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 1rem;
+}
+
+.expanded-video-container {
+  position: relative;
+  width: 90%;
+  max-width: 420px;
+  aspect-ratio: 9 / 16;
+  background: #000;
+}
+
+.expanded-video-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.close-button {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: #00bcd4;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
 }

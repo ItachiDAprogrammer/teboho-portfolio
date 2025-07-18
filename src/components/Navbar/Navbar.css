@@ -1,12 +1,12 @@
 /* Reset */
 .navbar {
   width: 100%;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 1000;
   background: transparent;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(2px);
 }
 
 .nav-container {
@@ -70,7 +70,7 @@
     top: 70px;
     left: 0;
     width: 100%;
-    background: #0b0b0b;
+    background: #0b0b0b2f;
     flex-direction: column;
     align-items: center;
     max-height: 0;
