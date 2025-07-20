@@ -1,6 +1,12 @@
+.portrait-carousel-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
 .shorts {
- padding: 1rem 0 2rem;
-  margin: 0;
+  padding: 2rem 1rem 0;
   background-color: #111;
   text-align: center;
   overflow: hidden;
@@ -12,6 +18,28 @@
   color: #00bcd4;
 }
 
+.swiper {
+  padding-bottom: 3rem;
+}
+
+.swiper-slide {
+  width: 250px !important;
+  transition: transform 0.4s ease;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  transform: scale(0.85) !important;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.swiper-slide-active {
+  transform: scale(1.05) !important;
+  opacity: 1;
+  z-index: 2;
+}
+
 .short-card {
   background: #1c1c1c;
   border-radius: 10px;
@@ -20,7 +48,7 @@
   height: 360px;
   width: 100%;
   max-width: 250px;
-  margin: 0 ;
+  margin: 0 auto;
   position: relative;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -42,7 +70,7 @@
   border: none;
   object-fit: cover;
   aspect-ratio: 9 / 16;
-  pointer-events: none;  /* 🔸 Prevent in-card play */
+  pointer-events: none;
 }
 
 .play-overlay {
@@ -53,35 +81,11 @@
   font-size: 3rem;
   color: white;
   z-index: 2;
-  pointer-events: none;  /* 🔸 So whole card is clickable */
+  pointer-events: none;
   opacity: 0.8;
 }
 
-.swiper {
- padding: 0 !important;
-  margin: 0 !important;
-  max-width: 100%;
-  overflow: visible;
-}
-.swiper-pagination-bullet {
-  background: #00bcd4;
-  opacity: 0.5;
-  transition: all 0.3s ease;
-}
-
-.swiper-pagination-bullet-active {
-  opacity: 1;
-  transform: scale(1.2);
-}
-
-.portrait-carousel-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Expanded video styling */
+/* Expanded Video */
 .expanded-video-overlay {
   position: fixed;
   inset: 0;
@@ -119,37 +123,4 @@
   height: 40px;
   font-size: 1.2rem;
   cursor: pointer;
-}
-.swiper-wrapper {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
-
-.swiper-slide {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
-/* Tighten swiper spacing */
-.swiper-slide {
-  width: auto !important;     /* Let the content define the width */
-  display: flex;
-  justify-content: center;    /* Center content inside slide */
-  padding: 0 !important;      /* Ensure no added padding */
-  margin:0 !important;       /* Remove default margins */
-}
-
-/* Optional: Remove right-padding from swiper wrapper */
-.swiper-wrapper {
-  padding-right: 0 !important;
-  margin-right: 0 !important;
-}
-
-.shorts .swiper {
-  padding: 0 0.5rem;
-  overflow: visible;
-}
-
-.shorts .swiper-slide {
-  margin-right: 0.5rem; /* Controls space between slides */
-  width: auto;
 }

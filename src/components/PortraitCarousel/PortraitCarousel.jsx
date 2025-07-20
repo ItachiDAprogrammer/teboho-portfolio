@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './PortraitCarousel.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-import { client } from '../../cms/sanityClient';
+import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
+
+import { client } from '../../cms/sanityClient';
 
 const PortraitCarousel = () => {
   const [videos, setVideos] = useState([]);
@@ -18,20 +20,18 @@ const PortraitCarousel = () => {
       .catch(console.error);
   }, []);
 
-  const handleVideoClick = (videoUrl) => {
-    // autoplay with sound on expand
-    const autoplayUrl = videoUrl.includes('?')
-      ? `${videoUrl}&autoplay=1`
-      : `${videoUrl}?autoplay=1`;
-    setExpandedVideo(autoplayUrl);
+  const handleVideoClick = (url) => {
+    setExpandedVideo(url);
   };
 
-  const closeExpandedVideo = () => setExpandedVideo(null);
+  const closeVideo = () => {
+    setExpandedVideo(null);
+  };
 
-  const handleKey = (e, videoUrl) => {
+  const handleKey = (e, url) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      handleVideoClick(videoUrl);
+      handleVideoClick(url);
     }
   };
 
@@ -40,17 +40,25 @@ const PortraitCarousel = () => {
       <section className="shorts" id="shorts">
         <h2>Short Form Videos</h2>
         <Swiper
-          modules={[Pagination]}
-          spaceBetween={0}
-          slidesPerView={1.2}
-          pagination={{ clickable: true }}
-          breakpoints={{
-            768: { slidesPerView: 2.8 },
-            1024: { slidesPerView: 3.1 },
+          modules={[EffectCoverflow, Pagination, Autoplay]}
+          effect="coverflow"
+          centeredSlides
+          slidesPerView="auto"
+          loop
+          grabCursor
+          spaceBetween={30}
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 2,
+            slideShadows: false,
           }}
+          autoplay={{ delay: 3000, disableOnInteraction: true }}
+          pagination={{ clickable: true }}
         >
           {videos.map((video, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={index} className="short-card-slide">
               <div
                 className="short-card"
                 role="button"
@@ -73,21 +81,15 @@ const PortraitCarousel = () => {
       </section>
 
       {expandedVideo && (
-        <div className="expanded-video-overlay" onClick={closeExpandedVideo}>
-          <div
-            className="expanded-video-container"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="expanded-video-overlay" onClick={closeVideo}>
+          <div className="expanded-video-container" onClick={(e) => e.stopPropagation()}>
             <iframe
-              src={expandedVideo}
-              frameBorder="0"
-              allow="autoplay; encrypted-media"
+              src={`${expandedVideo}?autoplay=1&mute=0`}
+              title="Expanded Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              title="Expanded video"
-            ></iframe>
-            <button className="close-button" onClick={closeExpandedVideo}>
-              ✕
-            </button>
+            />
+            <button className="close-button" onClick={closeVideo}>×</button>
           </div>
         </div>
       )}

@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './LandscapeCarousel.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-import { client } from '../../cms/sanityClient';
-
+import { EffectCoverflow, Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
+import { client } from '../../cms/sanityClient';
 
 const LandscapeCarousel = () => {
   const [videos, setVideos] = useState([]);
-  const [activeVideo, setActiveVideo] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   useEffect(() => {
     client
@@ -18,21 +17,18 @@ const LandscapeCarousel = () => {
       .catch(console.error);
   }, []);
 
-  const openVideo = (videoUrl) => {
-    // autoplay WITH sound (user has clicked, so allowed in most browsers)
-    const autoplayUrl = videoUrl.includes('?')
-      ? `${videoUrl}&autoplay=1`
-      : `${videoUrl}?autoplay=1`;
-    setActiveVideo(autoplayUrl);
+  const handlePlay = (videoUrl) => {
+    setSelectedVideo(videoUrl);
   };
 
-  const closeVideo = () => setActiveVideo(null);
+  const closeModal = () => {
+    setSelectedVideo(null);
+  };
 
-  // For keyboard access (Enter/Space)
-  const handleKey = (e, videoUrl) => {
+  const handleKeyDown = (e, url) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      openVideo(videoUrl);
+      handlePlay(url);
     }
   };
 
@@ -41,33 +37,40 @@ const LandscapeCarousel = () => {
       <section className="landscape" id="landscape">
         <h2>Long Form Videos</h2>
         <Swiper
-          modules={[Pagination]}
-          spaceBetween={30}
-          slidesPerView={1.1}
-          pagination={{ clickable: true }}
-          breakpoints={{
-            768: { slidesPerView: 1.5 },
-            1024: { slidesPerView: 2.2 },
+          modules={[EffectCoverflow, Autoplay]}
+          effect="coverflow"
+          centeredSlides
+          slidesPerView="auto"
+          loop
+          grabCursor
+          spaceBetween={40}
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 0,
+            depth: 150,
+            modifier: 2.5,
+            slideShadows: false,
           }}
+          autoplay={{ delay: 3000, disableOnInteraction: true }}
+          className="landscape-swiper"
         >
           {videos.map((video, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={index} className="landscape-card-slide">
               <div
                 className="landscape-card"
-                role="button"
+                onClick={() => handlePlay(video.videoUrl)}
+                onKeyDown={(e) => handleKeyDown(e, video.videoUrl)}
                 tabIndex={0}
-                onClick={() => openVideo(video.videoUrl)}
-                onKeyDown={(e) => handleKey(e, video.videoUrl)}
+                role="button"
               >
                 <div className="video-wrapper">
                   <iframe
-                    src={video.videoUrl}   // no autoplay in card
+                    src={video.videoUrl}
                     title={video.title}
-                    frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                  />
-                  <span className="play-button" aria-hidden="true">▶</span>
+                  ></iframe>
+                  <div className="play-button">▶</div>
                 </div>
               </div>
             </SwiperSlide>
@@ -75,14 +78,13 @@ const LandscapeCarousel = () => {
         </Swiper>
       </section>
 
-      {activeVideo && (
-        <div className="video-modal" onClick={closeVideo}>
+      {selectedVideo && (
+        <div className="video-modal" onClick={closeModal}>
           <div className="video-content" onClick={(e) => e.stopPropagation()}>
             <iframe
-              src={activeVideo}
+              src={`${selectedVideo}?autoplay=1&mute=0`}
               title="Expanded Video"
-              frameBorder="0"
-              allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           </div>

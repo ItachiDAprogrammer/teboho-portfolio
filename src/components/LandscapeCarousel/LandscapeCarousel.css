@@ -6,13 +6,10 @@
 }
 
 .landscape {
-  padding: 4rem 1rem 2rem; /* top: 4rem, sides: 1rem, bottom: 2rem */
+  padding: 4rem 1rem 0; /* less bottom space */
   background-color: #111;
   text-align: center;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .landscape h2 {
@@ -21,27 +18,37 @@
   color: #00bcd4;
 }
 
+.landscape-swiper {
+  padding-bottom: 4rem;
+}
+
+.swiper-slide {
+  width: 480px !important;
+  transition: transform 0.4s ease;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  transform: scale(0.8) !important;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.swiper-slide-active {
+  transform: scale(1.05) !important;
+  opacity: 1;
+  z-index: 2;
+}
+
 .landscape-card {
   background: #1c1c1c;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 188, 212, 0.2);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
- max-width: 640px;
-height: 360px;         /* 16:9 at this width */
+  height: 270px;
   position: relative;
-  margin: 0 auto;
   cursor: pointer;
-}
-
-.landscape-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 25px rgba(0, 188, 212, 0.4);
-}
-
-.landscape-card:focus {
-  outline: 2px solid #00bcd4;
-  outline-offset: 4px;
 }
 
 .video-wrapper {
@@ -56,7 +63,7 @@ height: 360px;         /* 16:9 at this width */
   border: none;
   display: block;
   background-color: #000;
-  pointer-events: none;   /* 🔸 Critical: Prevents in-card play; click goes to card */
+  pointer-events: none;
 }
 
 .play-button {
@@ -73,7 +80,7 @@ height: 360px;         /* 16:9 at this width */
   text-align: center;
   color: #fff;
   box-shadow: 0 0 10px rgba(0, 188, 212, 0.6);
-  pointer-events: none;  /* 🔸 So clicks hit parent */
+  pointer-events: none;
   opacity: 0.9;
   transition: transform 0.2s ease;
 }

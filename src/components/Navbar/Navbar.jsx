@@ -11,7 +11,7 @@ const Nav = () => {
     <header className="navbar">
       <div className="nav-container">
         <a href="#" className="logo">
-  <img src="/src/assets/logo.webp" alt="Teboho Ntene Logo" />
+  <img src="../public/logo.webp" alt="Teboho Ntene Logo" />
 </a>
 
         <nav className={`nav-links ${isOpen ? 'open' : ''}`}>
